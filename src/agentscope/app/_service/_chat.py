@@ -1379,6 +1379,15 @@ class ChatService:
                     ):
                         released = True
                         break
+                    if agent.state.has_awaiting_tool_calls(agent.name):
+                        await abandon_inbox_consumer(
+                            self._message_bus,
+                            user_id=user_id,
+                            session_id=session_id,
+                            agent_id=agent_id,
+                        )
+                        released = True
+                        break
                     input_msg = None
 
             finally:
